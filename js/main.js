@@ -23,14 +23,24 @@
 // ALTRIMENTI SE L'UTENTE
 // HA PIU' DI 65 ANNI--> APPLICO UNO SCONTO DEL 40%
 
-
+// costo al km
 const costoAlKm = 0.21;
-// Il numero di chilometri da percorrere
+
+// nome
+const generalita = prompt('Come ti chiami?');
+document.getElementById('NomeCognome').innerHTML = (generalita);
+
+
+// CHIEDERE ALL'UTENTE QUANTI KM DEVE PERCORRERE
 const kilometri = parseInt(prompt('Quanti kilometri vuoi percorrere?'));
+document.getElementById('kilometriUtente').innerHTML = (kilometri);
+
+// CHIEDERE ALL'UTENTE LA SUA ETA'
+const etaUser = parseInt(prompt('Quanti anni hai?'));
+document.getElementById('eta').innerHTML = (etaUser);
 
 // costante prezzo
 const price = (costoAlKm * kilometri);
-
 // prezzo under 18
 const priceUnder18 = (price - (price * 20 / 100));
 // prezzo under 18 con decimali
@@ -41,16 +51,39 @@ const priceOver65 = (price - (price * 40 / 100));
 // prezzo over 65 con decimali
 const priceOver65Fixed = priceOver65.toFixed(2);
 
-// Età del passeggero
-let etaUser = parseInt(prompt('Quanti anni hai?'));
 
 
 if (etaUser < 18) {
-    alert('Il prezzo del biglietto è € ' + priceUnder18Fixed);
+    alert('Attenzione, sei eleggibile per uno sconto del 20%');
 }
 else if (etaUser > 65) {
-    alert('Il prezzo del biglietto è € ' + priceOver65Fixed);
+    alert('Attenzione, sei eleggibile per uno sconto del 40%');
+}
+
+
+// GENERAZIONE BIGLIETTO
+
+const button = document.getElementById("myBtn");
+button.addEventListener("click", myFunction1)
+function myFunction1() {
+    document.getElementById("ticket").className = ('d-block')
+}
+
+const printGeneralita = document.getElementById('NomeCognome').innerHTML;
+document.getElementById('nomeTicket').innerHTML = ('DETTAGLIO PASSEGGERO   ' + printGeneralita);
+
+document.getElementById('offerta').innerHTML = ('Offerta Biglietto Standard');
+
+document.getElementById('carrozza').innerHTML = ('Carrozza 5');
+
+document.getElementById('codiceCp').innerHTML = ('Codice CP 92911');
+
+if (etaUser < 18) {
+    document.getElementById('prezzo').innerHTML = (priceUnder18Fixed);
+}
+else if (etaUser > 65) {
+    document.getElementById('prezzo').innerHTML = (priceOver65Fixed);
 }
 else {
-    alert('Il prezzo del biglietto è € ' + price);
+    document.getElementById('prezzo').innerHTML = (price);
 }
