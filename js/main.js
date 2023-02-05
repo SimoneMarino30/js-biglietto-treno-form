@@ -23,67 +23,68 @@
 // ALTRIMENTI SE L'UTENTE
 // HA PIU' DI 65 ANNI--> APPLICO UNO SCONTO DEL 40%
 
+/*********************************************************************
+ *                                                                   *
+ *                              COSTANTI                             *
+ *                                                                   *
+ *********************************************************************/
+
 // costo al km
 const costoAlKm = 0.21;
-
-// nome
-const generalita = prompt('Come ti chiami?');
-document.getElementById('NomeCognome').innerHTML = (generalita);
-
-
+// NOME COGNOME UTENTE
+let generalita = document.getElementById("NomeCognome").value;
 // CHIEDERE ALL'UTENTE QUANTI KM DEVE PERCORRERE
-const kilometri = parseInt(prompt('Quanti kilometri vuoi percorrere?'));
-document.getElementById('kilometriUtente').innerHTML = (kilometri);
+let kilometri = document.getElementById("kilometriUtente").value;
 
 // CHIEDERE ALL'UTENTE LA SUA ETA'
-const etaUser = parseInt(prompt('Quanti anni hai?'));
-document.getElementById('eta').innerHTML = (etaUser);
+let etaUser = document.getElementById("eta").value;
 
-// costante prezzo
-const price = (costoAlKm * kilometri);
-// prezzo under 18
-const priceUnder18 = (price - (price * 20 / 100));
-// prezzo under 18 con decimali
-const priceUnder18Fixed = priceUnder18.toFixed(2);
-
-// prezzo over 65
-const priceOver65 = (price - (price * 40 / 100));
-// prezzo over 65 con decimali
-const priceOver65Fixed = priceOver65.toFixed(2);
-
-
-
-if (etaUser < 18) {
-    alert('Attenzione, sei eleggibile per uno sconto del 20%');
-}
-else if (etaUser > 65) {
-    alert('Attenzione, sei eleggibile per uno sconto del 40%');
-}
-
+/*********************************************************************
+ *                                                                   *
+ *                              FUNCTIONS                            *
+ *                                                                   *
+ *********************************************************************/
 
 // GENERAZIONE BIGLIETTO
 
 const button = document.getElementById("myBtn");
-button.addEventListener("click", myFunction1)
-function myFunction1() {
-    document.getElementById("ticket").className = ('d-block')
-}
 
-const printGeneralita = document.getElementById('NomeCognome').innerHTML;
-document.getElementById('nomeTicket').innerHTML = ('DETTAGLIO PASSEGGERO   ' + printGeneralita);
+button.addEventListener("click", function ticketGeneration() {
+  document.getElementById("ticket").className = "d-block";
 
-document.getElementById('offerta').innerHTML = ('Offerta Biglietto Standard');
+  // costante prezzo
+  const price = costoAlKm * kilometri;
+  // prezzo under 18
+  const priceUnder18 = price - (price * 20) / 100;
+  // prezzo under 18 arrotondamento decimali
+  const priceUnder18Fixed = priceUnder18.toFixed(2);
 
-document.getElementById('carrozza').innerHTML = ('Carrozza 5');
+  // prezzo over 65
+  const priceOver65 = price - (price * 40) / 100;
+  // prezzo over 65 arrotondamento decimali
+  const priceOver65Fixed = priceOver65.toFixed(2);
 
-document.getElementById('codiceCp').innerHTML = ('Codice CP 92911');
+  document.getElementById("nomeTicket").innerHTML =
+    "DETTAGLIO PASSEGGERO " + generalita;
 
-if (etaUser < 18) {
-    document.getElementById('prezzo').innerHTML = (priceUnder18Fixed);
-}
-else if (etaUser > 65) {
-    document.getElementById('prezzo').innerHTML = (priceOver65Fixed);
-}
-else {
-    document.getElementById('prezzo').innerHTML = (price);
-}
+  document.getElementById("carrozza").innerHTML = Math.floor(
+    Math.random() * 10
+  );
+
+  document.getElementById("codiceCp").innerHTML = Math.floor(
+    Math.random() * 10000
+  );
+
+  if (etaUser < 18) {
+    document.getElementById("prezzo").innerHTML = priceUnder18Fixed;
+    document.getElementById("offerta").innerHTML = "Under 18";
+    alert("Attenzione, hai ricevuto uno sconto del 20%");
+  } else if (etaUser > 65) {
+    document.getElementById("prezzo").innerHTML = priceOver65Fixed;
+    document.getElementById("offerta").innerHTML = "Over 65";
+    alert("Attenzione, sei eleggibile per uno sconto del 40%");
+  } else {
+    document.getElementById("prezzo").innerHTML = price;
+    document.getElementById("offerta").innerHTML = "Standard";
+  }
+});
