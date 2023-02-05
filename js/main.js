@@ -47,16 +47,19 @@ let etaUser = document.getElementById("eta").value;
 
 // GENERAZIONE BIGLIETTO
 
-const button = document.getElementById("myBtn");
+const buttonDoEl = document.getElementById("myBtn");
 
-button.addEventListener("click", function ticketGeneration() {
+buttonDoEl.addEventListener("click", function ticketGeneration() {
   document.getElementById("ticket").className = "d-block";
 
-  // costante prezzo
+  // costante prezzo standard
   const price = costoAlKm * kilometri;
-  // prezzo under 18
+  // prezzo standard arrotondamento decimali
+  const priceFixed = price.toFixed(2);
+
+  // costante prezzo under 18
   const priceUnder18 = price - (price * 20) / 100;
-  // prezzo under 18 arrotondamento decimali
+  // costante prezzo under 18 arrotondamento decimali
   const priceUnder18Fixed = priceUnder18.toFixed(2);
 
   // prezzo over 65
@@ -67,24 +70,34 @@ button.addEventListener("click", function ticketGeneration() {
   document.getElementById("nomeTicket").innerHTML =
     "DETTAGLIO PASSEGGERO " + generalita;
 
-  document.getElementById("carrozza").innerHTML = Math.floor(
-    Math.random() * 10
-  );
+  document.getElementById("carrozza").innerHTML =
+    Math.floor(Math.random() * 10) + 1;
 
   document.getElementById("codiceCp").innerHTML = Math.floor(
     Math.random() * 10000
   );
 
   if (etaUser < 18) {
-    document.getElementById("prezzo").innerHTML = priceUnder18Fixed;
+    document.getElementById("prezzo").innerHTML = priceUnder18Fixed + " €";
     document.getElementById("offerta").innerHTML = "Under 18";
     alert("Attenzione, hai ricevuto uno sconto del 20%");
   } else if (etaUser > 65) {
-    document.getElementById("prezzo").innerHTML = priceOver65Fixed;
+    document.getElementById("prezzo").innerHTML = priceOver65Fixed + " €";
     document.getElementById("offerta").innerHTML = "Over 65";
     alert("Attenzione, sei eleggibile per uno sconto del 40%");
   } else {
-    document.getElementById("prezzo").innerHTML = price;
+    document.getElementById("prezzo").innerHTML = priceFixed + " €";
     document.getElementById("offerta").innerHTML = "Standard";
   }
 });
+
+// PROVA BUTTON RESET ( NON FUNZIONANTE)
+
+// const buttonReDoEl = document.getElementById("ReDoButton");
+
+// buttonReDoEl.addEventListener("click", function ticketReDo() {
+//   window.location.reload();
+//   document.getElementById("NomeCognome").value = "";
+//   document.getElementById("kilometriUtente").value = "";
+//   document.getElementById("eta").value = "";
+// });
